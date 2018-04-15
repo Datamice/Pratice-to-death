@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+/*这个程序是遍历或说线性搜索最经历的例子*/
+int search(int key, int a[],int len)
+{
+    int ret=-1;//-1表明一开始就找不到，然后在后面的判断中如果找到就改变其值，最后返回这个值，在main里输入时可以知道是否找到，甚至用这个函数返回值再赋值
+    for(int i=0;i<len;i++)
+    {
+        if(a[i]==key)
+        {
+            printf("%d位是%d\n",i+1,key);
+            ret=key;
+            continue;//用continue,注意到在a[]有三个8，我想把他们全打印出来，利用continue让if也变成一个循环，如果是break，判断到第一个8就退出了
+        }
+
+    }
+    return ret;
+}
+
+int main(){
+
+    int a[]={1,2,3,4,5,6,7,8,8,8};
+    int r= search(8,a,sizeof(a)/sizeof(a[0]));// 传入一个数组只需要传入其名称a，sizeof(a)/sizeof(a[0])用于求一个数组长度，同时注意这也是在调用函数
+    printf("r是%d",r);
+    return 0;
+}
