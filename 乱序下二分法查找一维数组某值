@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+/*这个程序是将乱序一维数组重新排列后找出检索某值最经历的例子，缺点在于数组中不能存在*/
+
+/* max 函数是一次遍历找出最大数的下标，并返回下标值，反正 目前学习到返回数组值太难了，因此没在这里再次循环直接排好数组a,况且a[]定义在main中，这里修改后在main中也无法起效*/
+int max(int a[],int len)
+{
+    int maxid=0,i;
+    for(i=0;i<len;i++)
+    {
+        if(a[i]>a[maxid])
+        {
+            maxid = i;
+        }
+    }
+    return maxid;
+}
+
+/*search 函数是二分法的重点，循环的思想在于left下标一定小于等于right下标 */
+int search(int key, int a[],int len)
+{
+    int ret=-1;//-1表明一开始就找不到，然后在后面的判断中如果找到就改变其值，最后返回这个值，在main里输入时可以知道是否找到，甚至用这个函数返回值再赋值
+    int left=0,right=len-1,mid=0;
+
+    while(left<=right)
+    {
+        mid=(left+right)/2;
+        if(a[mid]==key)
+        {
+            printf("%d位是%d\n",mid+1,a[mid]);
+            ret=key;
+            break;//用continue,注意到在a[]有三个8，我想把他们全打印出来，利用continue让if也变成一个循环，如果是break，判断到第一个8就退出了
+        }else if(a[mid]<key){
+            left=mid+1;
+        }else{
+            right=mid-1;
+        }
+    }
+    return ret;
+}
+
+int main()
+{
+
+    int a[]={1,3,4,6,5,7,2,9,13,18,8};
+    int len=sizeof(a)/sizeof(a[0]);
+    for(int k=len;k>1;k--)
+    {
+        int r=max(a,k);/*这里对数值替换利用第三方变量 */
+        int t=a[r];
+        a[r]=a[k-1];
+        a[k-1]=t;
+    }
+
+    for(int j=0;j<len;j++)
+    {
+        printf("%d\n",a[j]);
+    }
+    int r=search(18,a,len);
+  // 传入一个数组只需要传入其名称a，sizeof(a)/sizeof(a[0])用于求一个数组长度，同时注意这也是在调用函数
+
+
+
+    return 0;
+}
