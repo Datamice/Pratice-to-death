@@ -1,0 +1,27 @@
+int main()
+{
+    const int number;//记得number是number+2，比如number=99，实际上是输出101以内的质数，因为我的起点是2
+    scanf("%d",&number);
+    int a[number];
+    a[0]=2;//设定一个首值为2起的数字序列
+    for(int i=1;i<number;i++)
+    {
+        a[i]=i+2;//生成一个2，3，4....的数组
+        int isprime=1;//假设原来是素数，因为a[i]%a[k](k是小于i的数),只要找到一个余数为0就完成任务，唯一条件，若满足，则修改条件，循环退出
+        for(int k=0;k<i;k++)
+        {
+            if (a[i]%a[k]==0)
+            {
+                isprime=0;
+                break;
+            }
+        }
+        if(isprime!=0)
+        {
+            printf("%d ",a[i]);
+        }
+    }
+
+    return 0;
+
+}
