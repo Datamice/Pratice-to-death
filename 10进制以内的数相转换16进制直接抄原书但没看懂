@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+    int number=0,base=0;
+    int a=0,b=0;//a是取整，b是取余
+    int mobase[100];
+    int count=0;//count计数器作用挺大的,有时也用index
+
+   /*const char baseDigits[16]={
+    '1','2','3','4','5','6','7','8','9','10','','','',''
+    }*/
+    printf("请输入原值和转换的进制\n");
+    scanf("%d %d",&number,&base);
+    a=number/base;
+    b=number%base;
+    mobase[0]=b;//将存储组的产值先设定
+    printf("Number     Number Modulo2     Number/2\n");
+    printf("_______________________________________\n");
+    printf("%d%14d%14d\n",a*2+1,b,a);
+    while(a!=0)
+    {
+        count++;
+        b=a%base;
+        a=a/base;
+        mobase[count]=b;
+        printf("%d%14d%14d\n",a*2+1,b,a);
+    }
+
+/**下面这个循环J初始值为count，实现对数组的逆向读取，比以往新手的反序排列高级*/
+    for(int j=count;j>=0;j--)
+    {
+        printf("%d",mobase[j]);
+    }
+    return 0;
+}
