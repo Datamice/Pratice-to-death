@@ -1,9 +1,14 @@
+#include <stdio.h>
+#include <stdlib.h>
 int main()
 {
     const int number;//记得number是number+2，比如number=99，实际上是输出101以内的质数，因为我的起点是2
     scanf("%d",&number);
     int a[number];
-    a[0]=2;//设定一个首值为2起的数字序列
+    int count=0;
+    int b[100];//用来存质数的数组
+    b[0]=2;
+    a[0]=2;//设定一个首值为2起数字序列
     for(int i=1;i<number;i++)
     {
         a[i]=i+2;//生成一个2，3，4....的数组
@@ -16,12 +21,17 @@ int main()
                 break;
             }
         }
-        if(isprime!=0)
-        {
-            printf("%d ",a[i]);
+
+        if(isprime==1)
+        {   count++;
+            b[count]=a[i];
         }
     }
-
+    printf("\n");
+    for(int j=0;j<count;j++)//count 对质数个数计数
+    {
+        printf("%d ",b[j]);
+    }
     return 0;
 
 }
