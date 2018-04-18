@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+/*
+Newton-Raphson Method to Compute the Square Root of x
+step 1: set the value of guess to 1.
+step 2:if|guess^2 - x| <e(精度),proceed to step 4.
+step 3: guess=(x/guess+guess)/2 and return to step 2.
+step : the guess is the approximation of the square root.
+*/
+float search(float guess,float x,float e)
+{
+    while((guess*guess-x)>e||(guess*guess-x<-e))
+    {
+        guess=(x/guess+guess)/2;
+    }
+
+    return guess;
+}
+int main()
+{
+    float guess=0;
+    float x=0;
+    float e=0;
+    scanf("%f%f%f",&guess,&x,&e);
+    float r=search(guess,x,e);
+
+    printf("结果为%f",r);
+    return 0;
+}
