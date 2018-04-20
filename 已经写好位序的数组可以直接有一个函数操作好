@@ -1,0 +1,35 @@
+#include <stdio.h>
+//sort函数将数组分类好，但只能传入一个在main里直接定义的有值的数组，通过读入方式的常出现错误
+void sort(int value[],int len)
+{   int temp,i,j;
+    for(i=0;i<len-1;++i)
+    {
+        for(j=i+1;j<len;++j)//记得J不用每次从第一位开始
+        {
+            if(value[j]<value[i])
+            {
+                temp=value[j];
+                value[j]=value[i];
+                value[i]=temp;
+            }
+        }
+    }
+}
+
+int main()
+{
+    int i;
+    int score[16]={34,-5,6,0,12,100,56,22,44,-3,-9,12,17,22,6,11};
+    void sort(int value[],int len);
+    printf("\n\nthe array before the sort:\n");
+    for(i=0;i<16;i++)
+        printf("%d ",score[i]);
+    sort(score,16);
+    printf("\n\nthe array after the sort:\n");
+    for(i=0;i<16;i++)
+        printf("%d ",score[i]);
+
+
+    printf("\n");
+    return 0;
+}
