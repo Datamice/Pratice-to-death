@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+/*线性表简单介绍
+方法一顺序存储结构：直接表示，但有当出现 x的2000次方的多项式，要申请一个长度为2001的数组，浪费
+方法二结构数组：顺序存储结构只表示非零项，用结构数组（这里用二维数组），第一列表示系数，第二死表示次数，
+            问题在于在操作加减时要进行比较
+            p1:(9,12)(5,8)(3,2)
+            p2:(9,11)(6,8)(1,1)
+            按次数高低排列，操作时进行比较，当次数一样时系数相加
+方法三（最优）链表：
+                typedef struct PolyNode *Polynomial;
+                struct PolyNode{
+                    int coef;
+                    in expon;
+                    Polynominal link;
+                }
+            
+认识线性表：同种数据类型构成有序序列的线性结构，包含表头，表尾，空表，长度
+/*线性表的顺序存储实现
+    typedef struct LNode *List;//定义一个结构体指针，而且LNode声明这个LIST指针定义下的指针都是指向LNode这个结构体
+    struct LNode{
+            ElementType Data[MAXSIZE]// maxsize数组长度
+            int Last//最后一个元素所在位置，不一定为maxsize-1，若maxsize-1=Last证明表满，可作为一定的判定条件 
+    };
+    struct LNode L;
+    List ptrl;// 这个指针可以指向数组或last，看你怎么表示
+    访问下标为i元素：L.Data[i]或ptrl->Data[i]
+    线性表的长度：L.Last+1,Ptrl->Last+1
+    
+*/
+操作：建立一个线性表 List L, int i表示位置 ，元素X属于elementype;
+----------------------------------------------------------------------------------------
+        List MakeEmpty():初始化一个线性表
+            {
+                List Ptrl;
+                Ptrl = (List)malloc(sizeof(struct LNode));
+                Ptrl->Last = -1;//Last代表最后一个元素,Last=0表示元素在第一个位置，没元素就设置为-1
+                return Ptrl;
+            }
+----------------------------------------------------------------------------------------
+        ElementType FindKth(int K, List L)：在表L中找到位序为K的元素
+        e.g.
+            int FindKth(E)
+        int Find(ElementType X,List L):在表中找到元素X第一次出现的位置
+            {   int i=0;
+                while(i<=Ptrl->last&&Ptrl->Data[i]!=X)
+                    i++;
+                if(i>Ptrl->Last) return -1;//表示没找到
+                return i;//前面的判断没执行到return,这里就回返回找到的X的位置
+            }
+----------------------------------------------------------------------------------------
+        void Insert(ElementType X,int i,List L):在位置I前插入元素X，即新元素X所在位置为i-1，因为是从0计数，很麻烦，比方要在第i个位置插入，要倒过来n->n+1  n-1->n 最后原来位序为i的元素到了i+1,空出i
+            {
+                if(Ptrl->Last=Maxsize-1)//表满不能再插入
+                {   printf("表满")
+                    return;
+                }
+                if(i<1&&i>Ptrl->Last+2)//Last是指元素位序，I表示第几个元素，i=last+1，I>Ptrl->last+2，证明插入位置是Ptrl->last+1，已经算是添加新元素了
+                {   printf("位置不合法")
+                    return;
+                }
+                for(int j=Ptrl->Last;j>=i-1;j--)
+                    Ptrl->Data[j+1]=Ptrl->Data[j];
+                
+                Ptrl->Data[i-1]=X;
+                Ptrl->Last++;//移动后指针Last仍然是指向最后一个元素
+            }
+----------------------------------------------------------------------------------------
+        void Delete(int i,List L):删除指定位置I的元素
+            {
+                if(i<1||i>Ptrl->Last+1)//Last是指元素位序，I表示第几个元素,第一个元素下标是0，i=last+1，I>Ptrl->last+2，证明删除位置是Ptrl->last+1，i<0，同样是位置不存在
+                {   printf("位置不合法")
+                    return;
+                }
+                for(int j=i;j<=Ptrl->Last;j++)
+                    Ptrl->Data[j-1]=Ptrl->Data[j];
+                
+                Ptrl->Last--;//移动后指针Last仍然是指向最后一个元素
+                return;
+            }
+        删除操作的平均移动次数为(n-1)/2,时间性能为O(n)
+----------------------------------------------------------------------------------------
+        int Length(List L):返回线性表L的长度n:返回线性表的长度*/
+        
+        
+
