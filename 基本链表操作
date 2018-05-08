@@ -67,9 +67,20 @@ int FindX(int X,List L)
 
     return K;
 }
+void Insert(int X,int i,List L)
+{
+    List tem=L->Next;
+    for(int j=0;j<i-1;j++)
+        tem=tem->Next;
 
+    List p=(List)malloc(sizeof(Node));
+    p->value=X;
+    p->Next=tem->Next;//这里为什么是这样子替换，当直接用 tem 没起到插入作用，但前面已经定义 tem从指向第一个结点开始 了
+    tem->Next=p;
+}
 int main(){
     List L1=MakeEmptyAndInitial();
+    Insert(13,5,L1);
     List tem1=L1->Next;
     while(tem1){
         printf("%d ",tem1->value);
@@ -79,5 +90,7 @@ int main(){
     int a=FindKth(5, L1);
     int b=FindX(5, L1);
     printf("%d %d ",a,b);
+
     return 0;
 }
+
