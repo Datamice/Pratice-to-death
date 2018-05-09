@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+/*
+1.头结点的位置为0，特别在插入操作中，若插在表头，即NODE插在头结点前面，
+*/
 typedef struct Node* List;
 typedef struct Node{
     int value;
@@ -42,7 +45,7 @@ int length(List L)
     return len;
 }
 
-int FindKth(int K, List L)
+/*int FindKth(int K, List L)
 {   int value;
     List tem=L->Next;
     for(int i=0;i<K;i++)
@@ -51,33 +54,44 @@ int FindKth(int K, List L)
         tem=tem->Next;
     }
     return value;
-}
+}这是一个不好的程序，他没有限定当LIST中没有要查找的元素时怎么办，以下做修改版*/
+List FindKth(int K, List L)
+{   int i=1;//这里的I用来和K比较进行while循环同时还能计数，临时记数
+    List tem=L->Next;//这种指定法下，将头结点视为第一个结点，记得是尾插法下的头结点，不包含任何的value,只有指针，当然啦，我们也可以在过程中去赋值
+    while((tem!=NULL)&&i<K)
+    {
+        tem=tem->Next;
+        i++;
+    }
 
-int FindX(int X,List L)
+    if(i==K)//应对当TEM=NULL时退出，此时I不一定是要找的K，要判断
+        return tem;
+    else return NULL ;
+}
+List FindX(int X,List L)
 {
-    int K=1;
-    List tem=L->Next;
+    List tem=L;
     while((tem->value!=X)&&(tem!=NULL))
     {
         tem=tem->Next;
-        K++;
     }
-    if(tem==NULL)
-        K=0;
 
-    return K;
+    return tem;
 }
-void Insert(int X,int i,List L)
+
+void Insert(int X,int i,List L)//这个函数一开始写得不好，忽略了尾插法下，一个NODE插在头结点（空结点）前的情况，但实际上最好别这么插
 {
-    List tem=L->Next;
-    for(int j=0;j<i-1;j++)
-        tem=tem->Next;
+    List tem=FindKth(i-1,L);
+    if(tem==NULL){ printf("error"); return NULL;}
+
 
     List p=(List)malloc(sizeof(Node));
     p->value=X;
     p->Next=tem->Next;//这里为什么是这样子替换，当直接用 tem 没起到插入作用，但前面已经定义 tem从指向第一个结点开始 了
     tem->Next=p;
 }
+
+
 int main(){
     List L1=MakeEmptyAndInitial();
     Insert(13,5,L1);
@@ -85,12 +99,17 @@ int main(){
     while(tem1){
         printf("%d ",tem1->value);
         tem1=tem1->Next;
+
     }
 
-    int a=FindKth(5, L1);
-    int b=FindX(5, L1);
-    printf("%d %d ",a,b);
+    int a=FindKth(10, L1)->value;
+    int b=FindX(5, L1)->value;
+    int c=length(L1);
+    /* int* a=FindKth(5, L1), findkth 这个list型指针指向结构，结构中有int 和 指针两种类型，int*a刚确定了 *a是取其中value部分，但多个value 时又容易出错，
+    ;findkth是返回指针的，如果定义int a=findkth->value是合法的，但考虑到返回NULL时后面可不能加value，故最后用一个判断做如下处理*/
 
+
+    printf("%d %d %d",b,a,c);
     return 0;
 }
 
