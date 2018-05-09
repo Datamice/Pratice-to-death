@@ -33,6 +33,7 @@ List MakeEmptyAndInitial(){
     r->Next=NULL;//此时r在最后一个结点，设置其指针Next为0值。
     return L;
 }
+
 int length(List L)
 {
     List tem=L->Next;
@@ -78,7 +79,15 @@ List FindX(int X,List L)
 
     return tem;
 }
-
+/*删除和插入操作做得不详细*/
+List Delete(int K,List L)
+{
+    List L1=FindKth(K,L);
+    List L2=FindKth(K-1,L);
+    L2->Next=L1->Next;
+    free(L1);
+    return L;
+}
 void Insert(int X,int i,List L)//这个函数一开始写得不好，忽略了尾插法下，一个NODE插在头结点（空结点）前的情况，但实际上最好别这么插
 {
     List tem=FindKth(i-1,L);
@@ -95,21 +104,15 @@ void Insert(int X,int i,List L)//这个函数一开始写得不好，忽略了�
 int main(){
     List L1=MakeEmptyAndInitial();
     Insert(13,5,L1);
-    List tem1=L1->Next;
-    while(tem1){
-        printf("%d ",tem1->value);
-        tem1=tem1->Next;
-
+    Delete(7,L1);
+    List tem=L1->Next;
+    while(tem)
+    {
+        printf("%d ",tem->value);
+        tem=tem->Next;
     }
 
-    int a=FindKth(10, L1)->value;
-    int b=FindX(5, L1)->value;
-    int c=length(L1);
-    /* int* a=FindKth(5, L1), findkth 这个list型指针指向结构，结构中有int 和 指针两种类型，int*a刚确定了 *a是取其中value部分，但多个value 时又容易出错，
-    ;findkth是返回指针的，如果定义int a=findkth->value是合法的，但考虑到返回NULL时后面可不能加value，故最后用一个判断做如下处理*/
 
-
-    printf("%d %d %d",b,a,c);
     return 0;
 }
 
