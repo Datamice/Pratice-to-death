@@ -4,6 +4,7 @@
 #define maxsize 101
 #define ture 1
 #define false 0
+/*顺序表绝不用指针来操作，0号位放len 这样下标与位序保持一致*/
 
 typedef struct Sqlist
 {
@@ -14,8 +15,8 @@ typedef struct Sqlist
 
 int FindX(Sqlist List,int X);
 int SearchK(Sqlist List,int K);
-void DeleteK(Sqlist *p,int K);//作删除和插入操作时候要考虑到长度变化，如果我没有用指针指向结构体再传参，当然可以直接引用结构体，如&List
-void Insert(Sqlist *p,int K,int X);//另外为什么是Sqnode，其实相当于 Sqlist **List,即指针的指针，但我又错了，因为这里纯指针就好了，又不是要修改指针，故Sqlist *List 或Sqnode List都可以;前者更容易理解
+void DeleteK(Sqlist *p,int K);//作删除和插入操作时候要考虑到长度变化，要引用，即传地址，实参&List， 到时&List代入p的位置就变成*(&List), 而*号就是翻译地址上的内容，此时可操作，
+void Insert(Sqlist *p,int K,int X);//此处对比指针的指针，**rear,而我们实参用&rear, *(&rear)就是rear这个指针，*（&rear）翻译出指针， 按从右到左噢， 再加一个*就是传入指针了，
 int main()
 {  int x=0,i=1;//建立一个结构体数组
    Sqlist List;
@@ -71,15 +72,15 @@ void DeleteK(Sqlist *p,int K)//作删除和插入操作时候要考虑到长度�
         (p->A[i])=(p->A[i+1]);
 
     p->len=p->len-1;
-    printf("len after delete %d",p->len);
+    printf("len after delete %d",p->len);//检验删除后序列有没有问题
 }
 
 void Insert(Sqlist *p,int K,int X)
 {
     for(int i=(p->len);i>=K;i--)
-        p->A[K+1]=p->A[K];
+        p->A[i+1]=p->A[i];//记得这里要用新的i
 
     p->A[K]=X;
     p->len=p->len+1;
-    printf("len after insert %d",p->len);
+    printf("len after insert %d",p->len);//检验插入后序列有没有问题
 }
