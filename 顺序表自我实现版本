@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define maxsize 101
+#define ture 1
+#define false 0
+
+typedef struct Sqlist
+{
+    int A[maxsize];
+    int len;
+}Sqlist;
+
+
+int FindX(Sqlist List,int X);
+int SearchK(Sqlist List,int K);
+void DeleteK(Sqlist *p,int K);//作删除和插入操作时候要考虑到长度变化，如果我没有用指针指向结构体再传参，当然可以直接引用结构体，如&List
+void Insert(Sqlist *p,int K,int X);//另外为什么是Sqnode，其实相当于 Sqlist **List,即指针的指针，但我又错了，因为这里纯指针就好了，又不是要修改指针，故Sqlist *List 或Sqnode List都可以;前者更容易理解
+int main()
+{  int x=0,i=1;//建立一个结构体数组
+   Sqlist List;
+
+   while(scanf("%d",&x)!=EOF)//初始化结构体中数组并存入元素
+       {
+        List.A[i]=x;
+        i++;
+       }
+
+    if(i<maxsize){
+        List.len=i-1;
+
+    }else{
+        return false;
+    }
+
+    List.A[0]=List.len;
+
+
+    int a=FindX(List, 3);
+    int b=SearchK(List,3);
+    DeleteK(&List,3);
+    for(int j=1;j<=(List.len);j++)
+        printf("%d",List.A[j]);
+    Insert(&List, 3,30);
+
+    for(int j=1;j<=(List.len);j++)
+        printf("%d",List.A[j]);
+
+    return 0;
+}
+
+int FindX(Sqlist List,int X)
+{   int i=false;
+    for(int i=1;i<=(List.len);i++)
+        if(X==List.A[i])
+            return i;
+
+    return i;
+}
+
+int SearchK(Sqlist List,int K)
+{
+    if(K>0&&K<=List.len)
+         return List.A[K];
+
+    return 0;
+}
+void DeleteK(Sqlist *p,int K)//作删除和插入操作时候要考虑到长度变化，如果我没有用指针指向结构体再传参，当然可以直接引用结构体，如&List
+{
+    for(int i=K;i<p->len;i++)
+        (p->A[i])=(p->A[i+1]);
+
+    p->len=p->len-1;
+    printf("len after delete %d",p->len);
+}
+
+void Insert(Sqlist *p,int K,int X)
+{
+    for(int i=(p->len);i>=K;i--)
+        p->A[K+1]=p->A[K];
+
+    p->A[K]=X;
+    p->len=p->len+1;
+    printf("len after insert %d",p->len);
+}
