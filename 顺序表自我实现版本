@@ -4,8 +4,21 @@
 #define maxsize 101
 #define ture 1
 #define false 0
-/*顺序表绝不用指针来操作，0号位放len 这样下标与位序保持一致*/
+/*顺序表绝不用指针来操作，0号位放len 这样下标与位序保持一致
+除非如此定义
+typedef struct Sqlist *S;
+typedef struct Sqlist
+{
+    int A[maxsize];
+    int len;
+}Sqlist;
 
+然后后面
+Sqlist List;
+S p=&List;//S p这个表达相当于 Sqlist *p, 后面任何出现&List位置可用p代替， 记得改函数头和声明
+*/
+
+//以下为无指针实现 
 typedef struct Sqlist
 {
     int A[maxsize];
