@@ -85,7 +85,7 @@ List Delete(int K,List L)
     List L1=FindKth(K,L);
     List L2=FindKth(K-1,L);
     L2->Next=L1->Next;
-    free(L1);
+    free(L1);//删除完一个元素记得释放
     return L;
 }
 void Insert(int X,int i,List L)//这个函数一开始写得不好，忽略了尾插法下，一个NODE插在头结点（空结点）前的情况，但实际上最好别这么插
