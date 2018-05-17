@@ -48,3 +48,68 @@ int main()
     printf("%d %d",r,s.top);
 
 }
+/*链栈*/
+# include<stdio.h>
+# include<stdlib.h>
+
+typedef struct Snode *Stack; //一定程度可以理解为stack类型的变量指向Snode这样的变量，但*Stack就相当于Snode
+typedef struct Snode//为了防止出错，以后都前后定义类型，这里前后的Sqstack再用类型去定义类型变量
+{
+	int data;
+	Stack next;
+
+}Snode;
+
+/*初始化栈的代码*/
+Stack Init_stack()
+{
+	Stack s=(Stack)malloc(sizeof(Snode));
+	if(s == NULL)
+        printf("no space for application");
+    else
+        s->next=NULL;
+	return s;
+}
+
+//进栈
+void Push(int x,Stack s)
+{
+    Stack p=(Stack)malloc(sizeof(Snode));
+    p->data=x;
+    p->next=s->next;
+    s->next=p;
+
+}
+
+int Pop(Stack s)
+{   int x;
+	if(s->next==NULL){
+	printf("empty stack to pop\n");
+	}else{
+		Stack p=s->next;
+		s->next=p->next;
+		x=p->data;
+		free(p);//记得Pop相当 于删除操作，把空间去掉
+	}
+
+	return x;
+}
+
+int main()
+{	int i=10;
+	Stack s=Init_stack();
+
+	while(i){
+        Push(i,s);
+        i--;
+	}//i从10递减，故在栈顶的是1
+	Pop(s);//把1 跳出
+	Pop(s);//把2跳出
+    for(;s->next;)
+        {
+            s=s->next;// 先移位再打印，因为不想打印头结点
+            printf("%d ",s->data);
+
+        }
+    return 0;
+}
