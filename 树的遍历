@@ -1,0 +1,87 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct Bnode *BinTree;
+typedef struct Bnode
+{
+    int data;
+    struct Bnode *left;
+    struct Bnode *right;
+}Bnode;
+
+/*递归算法*/
+void PreOrderTraversal(BinTree BT)
+{
+    if(BT)
+    {
+        printf("%d",BT->data);
+        PreOrderTraversal(BT->left);
+        PreOrderTraversal(BT->right);
+    }
+    
+}
+
+
+void InOrderTraversal(BinTree BT)
+{
+    if(BT)
+    {
+        InOrderTraversal(BT->left);
+        printf("%d",BT->data);
+        InOrderTraversal(BT->right);
+    }
+    
+}
+
+
+void PostOrderTraversal(BinTree BT)
+{
+    if(BT)
+    {
+        
+        PostOrderTraversal(BT->left);
+        PostOrderTraversal(BT->right);
+        printf("%d",BT->data);
+    }
+    
+}
+
+/*非递归算法*/
+void InOrderTraversal(BinTree BT)
+{
+    BinTree T=BT;
+    Stack S=CreatStack(Maxsize);
+    if(T|| !IsEmpty(S))
+    {
+        while(T)
+        {
+            Push(S,T);
+            T=T->left;
+        }
+        if(!IsEmpty(s))
+        {
+            T=Pop(s);
+            printf("%5d",T->data);
+            T=T->right;
+        }
+    }
+}
+
+void PreOrderTraversal(BinTree BT)
+{
+    BinTree T=BT;
+    Stack S=CreatStack(Maxsize);
+    if(T|| !IsEmpty(S))
+    {
+        while(T)
+        {
+            Push(S,T);
+            printf("%5d",T->data);
+            T=T->left;
+        }
+        if(!IsEmpty(s))
+        {
+            T=Pop(s);
+            T=T->right;
+        }
+    }
+}
