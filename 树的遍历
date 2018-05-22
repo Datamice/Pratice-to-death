@@ -50,7 +50,7 @@ void InOrderTraversal(BinTree BT)
 {
     BinTree T=BT;
     Stack S=CreatStack(Maxsize);
-    if(T|| !IsEmpty(S))
+    while(T|| !IsEmpty(S))
     {
         while(T)
         {
@@ -70,7 +70,7 @@ void PreOrderTraversal(BinTree BT)
 {
     BinTree T=BT;
     Stack S=CreatStack(Maxsize);
-    if(T|| !IsEmpty(S))
+    while(T|| !IsEmpty(S))
     {
         while(T)
         {
@@ -83,5 +83,44 @@ void PreOrderTraversal(BinTree BT)
             T=Pop(s);
             T=T->right;
         }
+    }
+}
+
+void PostOrderTraversal(BinTree BT)//还不理解 
+{
+    BinTree T=BT;
+    Stack S=CreatStack(Maxsize);
+    while(T|| !IsEmpty(S))
+    {
+        while(T)
+        {
+            Push(S,T);
+           
+            T=T->left;
+        }
+        if(!IsEmpty(s))
+        {
+            T=Pop(s);
+            T=T->right;
+        }
+    }
+}
+
+/*层次遍历：问题在于把二维的二叉树变成一维的线性序列
+  方法：从父结点访问左右孩子，但先访问左孩子，必须要记住指向父结点的指针，或把右儿子保存，即要保存一个暂时不访问的结点，通过堆栈或队列，下面用队列  
+*/
+
+void LevelOrderTraversal()
+{
+    BinTree T=BT;
+    Queue Q;
+    if(!T) return;
+    Q=CreateQ(Maxsize);
+    Add(Q,T);
+    while(!IsEmpty(Q)){
+        T=Delete(Q);
+        printf("%d",T->data);
+        if(T->left) Add(Q,T->left);
+        if(T->right) Add(Q,T->left);
     }
 }
